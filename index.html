@@ -15,6 +15,9 @@
                 is unknown because the computation is not complete.
             </section>
             <section>
+                A javascript object that will, eventually, return a value. Your code does not wait. 
+            </section>
+            <section>
                 <section>Different standards and Implementations. </section>
                 <section> Promises/A  <br />
                     http://wiki.commonjs.org/wiki/Promises/A
@@ -38,7 +41,36 @@
                 </section>
             </section>
             <section>
-                $http.get returns a promise already, there is <i>usually</i> no need to wrap in $q.defer(). This is the most
+                <h3>States and fates</h3>
+                <ol>
+                    <li> fulfilled</li>
+                    <li> rejected </li>
+                    <li> pending </li>
+                </ol>
+                <h4> Fates </h4>
+                <ol>
+                    <li>
+                        resolved (to another promise or discrete value)
+                    </li>
+                    <li> unresolved</li>
+                </ol>
+            </section>
+            <section>
+                Resolved promises can be 
+                <div>
+                            fulfilled, rejected, or pending.
+                </div>
+                <p>
+                    Fulfilled if it is finished, rejected if it has been rejected or is currently rejecting.
+                    Pending if it has been resolved to another promise.
+                </p>
+            </section>
+            <section>
+                Unresolved promises are pending.
+            </section>
+            <section>
+                <h3> Commonly found misused idiom </h3>
+                $http.get returns a promise already, there is <i>almost always</i> no need to wrap in $q.defer(). This is the most
                 commonly found misuse. Not really bad, just superflous. 
             </section>
             <section>
@@ -170,17 +202,17 @@ function initialize() {
 
                     <div class="col-md-6">
                         <h3>Full circle back to synchronous code? Not quite, no waiting</h3>
-                        <p>
-                            Every .then returns a function. Catch Method is used, best practice because... 
-                        </p>
-                    </div>
 
                     </div>
+
+                </div> <!-- End Row -->
 
 
             </section>
             <section>
-                A promise has state 
+                <p>
+                    Every .then returns a function. Catch Method is used as best practice
+                </p>
             </section>
         </div>
     </div>
