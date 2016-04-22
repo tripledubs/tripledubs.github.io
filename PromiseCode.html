@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+</head>
+<body ng-controller="myController" style="padding-top:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>A simple promise</h3>
+                <pre>
+$scope.getData = function (url) {
+    return $http.get(url).then(
+        function success(response) {
+            $scope.users.push(response.data);
+        },
+        function failure(reason) {
+            $scope.users = [];
+            $scope.users.push([{ index: "FAIL" }]);
+        }
+    )
+}
+    </pre>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-default" ng-click="getData('/common/SampleData.json')">Works</button>
+                <button class="btn btn-default" ng-click="getData('/nowork')">Fail, wrong URL</button>
+
+                <div> <h3>{{ worked }}</h3> </div>
+
+            </div>
+        </div> <!-- End Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3> Promise Anti Pattern </h3>
+<pre>
+// In the Controller
+$scope.getFromFactory = function (url) {
+    myFactory.getData(url).then(
+        function success() {
+            $scope.worked = true
+        }), function failure() {
+            $scope.worked = false
+        }
+}
+
+// In the factory
+getData: function (url) {
+    return $http.get(url).then(
+        function success(response) {
+            return response.data
+        },
+        function failure(reason) {
+            return reason
+        }
+    )
+}
+
+</pre>
+            </div>
+            <div class="col-lg-6">
+                <h3></h3>
+                <button class="btn btn-default" ng-click="getFromFactory('/common/SampleData.json')">Works</button>
+                <button class="btn btn-default" ng-click="getFromFactory('/nowork')">Fail, wrong URL</button>
+
+                <div> <h3>{{ worked }}</h3> </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h3> Better </h3>
+                <pre>
+// In the Controller
+$scope.getFromFactoryGOOD = function (url) {
+    myFactory.getDataGOOD(url).then(
+        function success() {
+            $scope.worked = true
+        }, function failure() {
+            $scope.worked = false
+        })
+}
+
+                    
+// In the factory
+                                    // good
+getDataGOOD: function (url) {
+    return $http.get(url).then(
+        function success(response) {
+            console.log(response.data)
+            return response.data
+        }
+    )
+}
+</pre>
+            </div>
+            <div class="col-md-6">
+                <h3></h3>
+                <button class="btn btn-default" ng-click="getFromFactoryGOOD('/common/SampleData.json')">Works</button>
+                <button class="btn btn-default" ng-click="getFromFactoryGOOD('/nowork')">Fail, wrong URL</button>
+
+                <div> <h3>{{ worked }}</h3> </div>
+            </div>
+        </div> <!-- End Row -->
+    </div> <!-- End Container-->
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="myController.js"></script>
+    <script type="text/javascript" src="myFactory.js"></script>
+</body>
+</html>
