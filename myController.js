@@ -5,16 +5,16 @@
         .module('app')
         .controller('myController', function ($scope,$http,myFactory) {
 
-            $scope.working = true;
+            $scope.working = '';
             $scope.users = [];
 
             $scope.getData = function (url) {
                 return $http.get(url).then(
                     function success(response) {
-                        $scope.worked = true
+                        $scope.worked = "Working"
                     },
                     function failure(reason) {
-                        $scope.worked = false
+                        $scope.worked = "Not working"
                     }
                 );
             }
@@ -22,19 +22,19 @@
             $scope.getFromFactory = function (url) {
                 myFactory.getData(url).then(
                     function success() {
-                        $scope.worked = true
-                    }), function failure() {
-                        $scope.worked = false
-                    }
+                        $scope.worked = "Working"
+                    }, function failure() {
+                        $scope.worked = "Not working"
+                    })
             }
 
             $scope.getFromFactoryGOOD = function (url) {
                 myFactory.getDataGOOD(url).then(
                     function success() {
-                        $scope.worked = true
+                        $scope.worked = "Working"
                     }, function failure() {
                         console.log("here");
-                        $scope.worked = false
+                        $scope.worked = "Not working"
                     })
             }
 
